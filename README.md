@@ -1,6 +1,8 @@
-# pyPCGA
+# GUI development for pyPCGA
 
 Python library for Principal Component Geostatistical Approach
+
+Currently, our senior team project is working on implementing a functional GUI for pyPCGA using PyQT.
 
 version 0.1
 
