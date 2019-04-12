@@ -57,7 +57,7 @@ class Ui_MainWindow(object):
         self.gridLayout_6.addWidget(self.execute_button, 0, 0, 1, 1)
         #added
         self.execute_button.clicked.connect(self.execute)
-
+        
         self.progress_bar_label = QtWidgets.QLabel(self.centralwidget)
         self.progress_bar_label.setGeometry(QtCore.QRect(11, 11, 76, 16))
         font = QtGui.QFont()
@@ -332,7 +332,7 @@ class Ui_MainWindow(object):
         self.s_true_label.setFont(font)
         self.s_true_label.setObjectName("s_true_label")
         self.gridLayout.addWidget(self.s_true_label, 3, 0, 1, 1)
-
+        
         self.s_true_button = QtWidgets.QToolButton(self.Module1Frame)
         self.s_true_button.setMinimumSize(QtCore.QSize(200, 25))
         self.s_true_button.setMaximumSize(QtCore.QSize(200, 25))
@@ -341,10 +341,10 @@ class Ui_MainWindow(object):
         self.s_true_button.setAutoRaise(True)
         self.s_true_button.setObjectName("s_true_button")
         self.gridLayout.addWidget(self.s_true_button, 3, 1, 1, 1)
-
+        
         self.s_true_button.clicked.connect(self.openFileNameDialog)
-
-
+        
+        
         self.n_output_label = QtWidgets.QLabel(self.Module1Frame)
         self.n_output_label.setMaximumSize(QtCore.QSize(50, 20))
         font = QtGui.QFont()
@@ -886,14 +886,14 @@ class Ui_MainWindow(object):
         self.menupyPCGA.addAction(self.actionDownload)
         self.menupyPCGA.addAction(self.actionImport)
         self.menubar.addAction(self.menupyPCGA.menuAction())
-
+        
         self.frame = QtWidgets.QWidget(self.centralwidget)
         self.frame.setGeometry(QtCore.QRect(760, 30, 651, 511))
         self.frame.setObjectName("frame")
         self.fig = plt.figure()
         self.plotWidget = FigureCanvas(self.fig)
         self.plotWidget.setParent(self.frame)
-
+        
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
         MainWindow.setTabOrder(self.lx_box, self.ly_box)
@@ -916,7 +916,7 @@ class Ui_MainWindow(object):
         MainWindow.setTabOrder(self.restol_label, self.execute_button)
         MainWindow.setTabOrder(self.execute_button, self.export_settings)
         MainWindow.setTabOrder(self.export_settings, self.import_settings)
-
+    
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
@@ -993,9 +993,9 @@ class Ui_MainWindow(object):
         self.actionSave.setText(_translate("MainWindow", "Save"))
         self.actionDownload.setText(_translate("MainWindow", "Download"))
         self.actionImport.setText(_translate("MainWindow", "Import"))
-
-
-
+    
+    
+    
     # function to pop up open file dialog
     def openFileNameDialog(self):
         options = QtWidgets.QFileDialog.Options()
@@ -1003,93 +1003,97 @@ class Ui_MainWindow(object):
         fileName, _ = QtWidgets.QFileDialog.getOpenFileName(self.s_true_button,"QFileDialog.getOpenFileName()", "","All Files (*);;Text Files (*.txt)", options=options)
         if fileName:
             print(fileName)
-
+    
     def execute(self):
-        value_2 = int(self.x0_box.toPlainText())
-        value = int(self.lx_box.toPlainText())
-
-        print("values: ", value, value_2)
-
-        self.plot(value, value_2)
-
-    def plot(self, lx, x0):
-    # for windows application
+        lx_val = int(self.lx_box.toPlainText())
+        x0_val = int(self.x0_box.toPlainText())
+        dxx_val = float(self.dxx_box.toPlainText())
+        # true_txt_val = String(self.s_true.toPlainText())
+        
+        print("values: ", x0_val, lx_val, dxx_val) # print out the values for testing purposes
+        
+        self.update_val(x0_val, lx_val, dxx_val) # update the values before plotting
+        
+        self.plot(x0_val, lx_val, dxx_val) # plot the values using matplotlib
+    
+    def update_val(x0_val, lx_val, dxx_val):
+        ####### BEGINNING OF MODULE 1 ####################
+        
+        # M1 parameters are: Lx, Ly, Lz, x0, y0, z0, dx, dy, dz, s_true, s_init
+        
+        x0 = x0      # M1: Origin of x dimension
+        Lx = lx   # M1: Total length in the x direction
+        dxx = dxx_val   # M1: Discretization (cell length) in the x direction, assumes cells of equal size
+        
+        # This simulation is 1D, therefore default to y_origin = z_origin = 0, Ly = Lz = 1, dy = dz = 1
+        
+        y0 = 0      # M1: Origin of y dimension
+        Ly = 1  # M1: Total length in the y direction
+        dyy = 1     # M1: Discretization (cell length) in the y direction, assumes cells of equal size
+        
+        z0 = 0      # M1: Origin of y dimension
+        Lz = 1  # M1: Total length in the y direction
+        dzz = 1     # M1: Discretization (cell length) in the z direction, assumes cells of equal size
+        
+        xmin = np.array([x0])
+        xmax = np.array([Lx])
+        
+        m = int(Lx/dxx + 1)
+        N = np.array([m])
+        
+        _translate = QtCore.QCoreApplication.translate
+        
+        self.m_output.setText(_translate("MainWindow", str(m)))
+        self.n_output.setText(_translate("MainWindow", str(N)))
+        
+        
+        dx = np.array([dxx])
+        x = np.linspace(xmin, xmax, m)
+        pts = np.copy(x)
+        
+        
+        s_true = np.loadtxt('true.txt') # M1: input for file "true.txt"
+        
+        # s_init, three options (drop down menu)
+        # option 1: user inputs a constant which gets assigned to variable s_constant
+        
+        s_constant = 1          # M1: User selects constant checkbox from drop down, and inputs number in box
+        s_init = s_constant * np.ones((m, 1))
+        
+        # option 2: s_init automatically calculated using s_true, if s_true provided
+        # # M1: User selects Auto checkbox from drop down, and check is run to see if s_true was provided
+        print(m)
+        s_init = np.mean(s_true) * np.ones((m, 1)) #M1 file input or constant input
+    # s_init = np.copy(s_true) # you can try with s_true!
+    
+    def plot(self, x0, Lx, dxx):
+        # for windows application
         # model domain and discretization
         
         # This is a 1D case, therefore should be used to test the 1D scenario
         
-        ####### BEGINNING OF MODULE 1 #################### 
-
-        # M1 parameters are: Lx, Ly, Lz, x0, y0, z0, dx, dy, dz, s_true, s_init
-
-        x0 = x0      # M1: Origin of x dimension 
-        Lx = lx   # M1: Total length in the x direction
-        dxx = 0.1   # M1: Discretization (cell length) in the x direction, assumes cells of equal size
-
-        # This simulation is 1D, therefore default to y_origin = z_origin = 0, Ly = Lz = 1, dy = dz = 1
-
-        y0 = 0      # M1: Origin of y dimension 
-        Ly = 1  # M1: Total length in the y direction
-        dyy = 1     # M1: Discretization (cell length) in the y direction, assumes cells of equal size
-
-        z0 = 0      # M1: Origin of y dimension 
-        Lz = 1  # M1: Total length in the y direction
-        dzz = 1     # M1: Discretization (cell length) in the z direction, assumes cells of equal size
-
-        xmin = np.array([x0]) 
-        xmax = np.array([Lx])
-
-        m = int(Lx/dxx + 1) 
-        N = np.array([m])
-
-        _translate = QtCore.QCoreApplication.translate
-
-        self.m_output.setText(_translate("MainWindow", str(m)))
-        self.n_output.setText(_translate("MainWindow", str(N)))
-
-
-        dx = np.array([dxx])
-        x = np.linspace(xmin, xmax, m)
-        pts = np.copy(x)
-     
-
-        s_true = np.loadtxt('true.txt') # M1: input for file "true.txt"  
-
-        # s_init, three options (drop down menu) 
-        # option 1: user inputs a constant which gets assigned to variable s_constant 
-
-        s_constant = 1          # M1: User selects constant checkbox from drop down, and inputs number in box 
-        s_init = s_constant * np.ones((m, 1))
-
-        # option 2: s_init automatically calculated using s_true, if s_true provided
-        # # M1: User selects Auto checkbox from drop down, and check is run to see if s_true was provided 
-        print(m)
-        s_init = np.mean(s_true) * np.ones((m, 1)) #M1 file input or constant input
-        # s_init = np.copy(s_true) # you can try with s_true!
-     
-        
         ### PLOTTING FOR 1D MODULE 1 #############
         
-       ## fig = self.frame.plotWidget.add_subplot(100)
+        ## fig = self.frame.plotWidget.add_subplot(100)
         fig = self.fig.add_subplot(111)
         fig.plot(x, s_init,'k-',label='initial')
         fig.plot(x, s_true,'r-',label='true')
-
-       # self.frame.plotWidget.axes.plot(x, s_init,'k-',label='initial')
-       # self.frame.plotWidget.axes.plot(x, s_true,'r-',label='true')
+        
+        # self.frame.plotWidget.axes.plot(x, s_init,'k-',label='initial')
+        # self.frame.plotWidget.axes.plot(x, s_true,'r-',label='true')
         fig.set_title('Pumping history')
         fig.set_xlabel('Time (min)')
         fig.set_ylabel(r'Q ($m^3$/min)')
         fig.legend()
-
-
+        
+        
         self.plotWidget.draw()
 
-        #fig.ylabel(r'Q ($m^3$/min)')
-        #fig.legend()
-        #fig.draw()
+#fig.ylabel(r'Q ($m^3$/min)')
+#fig.legend()
+#fig.draw()
 
-        ####### END OF MODULE 1 #################### 
+####### END OF MODULE 1 ####################
 
 import sys
 from PyQt5.QtWidgets import QApplication, QMainWindow
