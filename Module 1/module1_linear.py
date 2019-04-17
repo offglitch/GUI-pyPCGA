@@ -1016,6 +1016,9 @@ class Ui_MainWindow(object):
         
         self.plot(x0_val, lx_val, dxx_val) # plot the values using matplotlib
     
+    x0 = None
+    Lx = None
+    dxx = None
     def update_val(x0_val, lx_val, dxx_val):
         ####### BEGINNING OF MODULE 1 ####################
         
