@@ -1,1 +1,1 @@
-This folder contains the completed GUI for Module 1 of pyPCGA
+This folder serves as a guide of completion for each Module that we complete.	
