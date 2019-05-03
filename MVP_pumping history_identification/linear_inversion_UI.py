@@ -351,23 +351,7 @@ class Ui_MainWindow(object):
         self.s_true_button.clicked.connect(self.openFileNameDialog)
 
 
-        self.n_output_label = QtWidgets.QLabel(self.Module1Frame)
-        self.n_output_label.setMaximumSize(QtCore.QSize(50, 20))
-        font = QtGui.QFont()
-        font.setFamily("Helvetica")
-        font.setPointSize(15)
-        self.n_output_label.setFont(font)
-        self.n_output_label.setObjectName("n_output_label")
-        self.gridLayout.addWidget(self.n_output_label, 4, 0, 1, 1)
-        self.n_output = QtWidgets.QLabel(self.Module1Frame)
-        self.n_output.setMaximumSize(QtCore.QSize(130, 25))
-        font = QtGui.QFont()
-        font.setFamily("Helvetica")
-        font.setPointSize(15)
-        self.n_output.setFont(font)
-        self.n_output.setText("")
-        self.n_output.setObjectName("n_output")
-        self.gridLayout.addWidget(self.n_output, 4, 1, 1, 1)
+        
         self.m_output_label = QtWidgets.QLabel(self.Module1Frame)
         self.m_output_label.setMaximumSize(QtCore.QSize(50, 20))
         font = QtGui.QFont()
@@ -514,20 +498,6 @@ class Ui_MainWindow(object):
         self.Module1Frame_3.setObjectName("Module1Frame_3")
         self.gridLayout_3 = QtWidgets.QGridLayout(self.Module1Frame_3)
         self.gridLayout_3.setObjectName("gridLayout_3")
-        self.n_label = QtWidgets.QTextEdit(self.Module1Frame_3)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.n_label.sizePolicy().hasHeightForWidth())
-        self.n_label.setSizePolicy(sizePolicy)
-        self.n_label.setMaximumSize(QtCore.QSize(130, 25))
-        font = QtGui.QFont()
-        font.setFamily("Helvetica")
-        self.n_label.setFont(font)
-        self.n_label.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
-        self.n_label.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
-        self.n_label.setObjectName("n_label")
-        self.gridLayout_3.addWidget(self.n_label, 0, 3, 1, 1)
         self.label_14 = QtWidgets.QLabel(self.Module1Frame_3)
         self.label_14.setMaximumSize(QtCore.QSize(130, 25))
         font = QtGui.QFont()
@@ -818,7 +788,7 @@ class Ui_MainWindow(object):
         MainWindow.setTabOrder(self.lz_box, self.dxx_box)
         MainWindow.setTabOrder(self.dxx_box, self.dyy_box)
         MainWindow.setTabOrder(self.dyy_box, self.dz_box)
-        MainWindow.setTabOrder(self.dz_box, self.n_label)
+       # MainWindow.setTabOrder(self.dz_box, self.n_label)
       #  MainWindow.setTabOrder(self.n_label, self.nlocs_label)
         MainWindow.setTabOrder(self.x_select, self.precision_label)
         MainWindow.setTabOrder(self.precision_label, self.kernel_box)
@@ -862,7 +832,7 @@ class Ui_MainWindow(object):
         self.dz_box.setPlaceholderText(_translate("MainWindow", "0 - 200"))
         self.s_true_label.setText(_translate("MainWindow", "s_true:"))
         self.s_true_button.setText(_translate("MainWindow", "Click to select file"))
-        self.n_output_label.setText(_translate("MainWindow", "N:"))
+        #self.n_output_label.setText(_translate("MainWindow", "N:"))
         self.m_output_label.setText(_translate("MainWindow", "M:"))
         self.dy_label_2.setPlaceholderText(_translate("MainWindow", "0 - 200"))
         self.label_2.setText(_translate("MainWindow", "s_init:"))
@@ -907,6 +877,21 @@ class Ui_MainWindow(object):
 
 
     def switchFunction(self):
+        # if(len(obs) != m):
+
+        #    msg = QtWidgets.QMessageBox()
+
+        #    msg.setIcon(QtWidgets.QMessageBox.Information)
+
+        #    msg.setText("Error!")
+        #    msg.setInformativeText("Something went wrong. Please check that your values are correct.")
+        #    msg.setWindowTitle("Error Message")
+        #    msg.setDetailedText("The details are as follows:")
+        #    msg.setStandardButtons(QtWidgets.QMessageBox.Ok | QtWidgets.QMessageBox.Cancel)
+        #   # msg.buttonClicked.connect(msgbtn)
+    
+        #    retval = msg.exec_()
+        #    print("value of pressed message box button:", retval)
         print("Checked")
 
     # function to pop up open file dialog
@@ -963,7 +948,7 @@ class Ui_MainWindow(object):
         _translate = QtCore.QCoreApplication.translate
 
         self.m_output.setText(_translate("MainWindow", str(m)))
-        self.n_output.setText(_translate("MainWindow", str(N)))
+        #self.n_output.setText(_translate("MainWindow", str(N)))
 
 
         dx = np.array([dxx])
@@ -973,8 +958,28 @@ class Ui_MainWindow(object):
 
         s_true = np.loadtxt('true.txt') # input for file "true.txt" this can be changed to a default directory  
         obs = np.loadtxt('obs.txt')
+        #obs = []
 
 
+
+        if(len(obs) != m):
+
+           msg = QtWidgets.QMessageBox()
+
+           msg.setIcon(QtWidgets.QMessageBox.Information)
+
+           msg.setText("Error!")
+           msg.setInformativeText("Something went wrong. Please check that your values are correct.")
+           msg.setWindowTitle("Error Message")
+           msg.setDetailedText("The details are as follows:")
+           msg.setStandardButtons(QtWidgets.QMessageBox.Ok | QtWidgets.QMessageBox.Cancel)
+          # msg.buttonClicked.connect(msgbtn)
+    
+           retval = msg.exec_()
+           print("value of pressed message box button:", retval)
+    
+
+        # print("the values in obs are not correct")
         # s_init, three options (drop down menu) 
         # option 1: user inputs a constant which gets assigned to variable s_constant 
 
@@ -1034,8 +1039,7 @@ class Ui_MainWindow(object):
         fig.set_xlabel('Time (min)')
         fig.set_ylabel(r'Q ($m^3$/min)')
         fig.legend()
-
-
+        
         ### PLOTTING FOR 1D MODULE 2, 3 & 4 #############
 
         # fig2 = self.fig.add_subplot(221)
@@ -1050,9 +1054,7 @@ class Ui_MainWindow(object):
         fig2.set_xlabel('Time (min)')
         fig2.set_ylabel(r'Q ($m^3$/min)')
         fig2.legend()
-
         self.plotWidget.draw()
-
 
 import sys
 from PyQt5.QtWidgets import QApplication, QMainWindow
