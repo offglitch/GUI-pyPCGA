@@ -15,6 +15,8 @@ import matplotlib.pyplot as plt
 from scipy.io import savemat, loadmat
 import numpy as np
 import math
+import drawdown as dd
+
 from pyPCGA import PCGA
 
 
@@ -383,22 +385,6 @@ class Ui_MainWindow(object):
         self.m_output.setText("")
         self.m_output.setObjectName("m_output")
         self.gridLayout.addWidget(self.m_output, 4, 3, 1, 1)
-        self.check_mod1 = QtWidgets.QPushButton(self.Module1Frame)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.check_mod1.sizePolicy().hasHeightForWidth())
-        self.check_mod1.setSizePolicy(sizePolicy)
-        self.check_mod1.setMinimumSize(QtCore.QSize(130, 20))
-        self.check_mod1.setMaximumSize(QtCore.QSize(130, 20))
-        font = QtGui.QFont()
-        font.setFamily("Helvetica")
-        font.setPointSize(14)
-        font.setKerning(True)
-        self.check_mod1.setFont(font)
-        self.check_mod1.setAutoDefault(False)
-        self.check_mod1.setObjectName("check_mod1")
-        self.gridLayout.addWidget(self.check_mod1, 4, 5, 1, 1)
         self.dy_label_2 = QtWidgets.QTextEdit(self.Module1Frame)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -566,6 +552,9 @@ class Ui_MainWindow(object):
         self.Obs_button.setAutoRaise(True)
         self.Obs_button.setObjectName("Obs_button")
         self.gridLayout_3.addWidget(self.Obs_button, 0, 1, 1, 1)
+
+        self.Obs_button.clicked.connect(self.openFileNameDialog)
+
         self.label_15 = QtWidgets.QLabel(self.centralwidget)
         self.label_15.setGeometry(QtCore.QRect(11, 573, 241, 16))
         font = QtGui.QFont()
@@ -751,28 +740,9 @@ class Ui_MainWindow(object):
         self.restol_label.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
         self.restol_label.setObjectName("restol_label")
         self.gridLayout_4.addWidget(self.restol_label, 2, 5, 1, 2)
-        self.label_28 = QtWidgets.QLabel(self.Module1Frame_4)
-        self.label_28.setMaximumSize(QtCore.QSize(65, 20))
+
         font = QtGui.QFont()
         font.setFamily("Helvetica")
-        font.setPointSize(15)
-        self.label_28.setFont(font)
-        self.label_28.setObjectName("label_28")
-        self.gridLayout_4.addWidget(self.label_28, 3, 0, 1, 1)
-        self.post_cov_label = QtWidgets.QTextEdit(self.Module1Frame_4)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.post_cov_label.sizePolicy().hasHeightForWidth())
-        self.post_cov_label.setSizePolicy(sizePolicy)
-        self.post_cov_label.setMaximumSize(QtCore.QSize(130, 25))
-        font = QtGui.QFont()
-        font.setFamily("Helvetica")
-        self.post_cov_label.setFont(font)
-        self.post_cov_label.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
-        self.post_cov_label.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
-        self.post_cov_label.setObjectName("post_cov_label")
-        self.gridLayout_4.addWidget(self.post_cov_label, 3, 1, 1, 1)
         self.label_30 = QtWidgets.QLabel(self.Module1Frame_4)
         self.label_30.setMaximumSize(QtCore.QSize(50, 20))
         font = QtGui.QFont()
@@ -834,8 +804,10 @@ class Ui_MainWindow(object):
         self.plotWidget = FigureCanvas(self.fig)
         self.plotWidget.setParent(self.frame)
 
-        self.switch_button = QtWidgets.QPushButton(self.layoutWidget)
-        self.switch_button.clicked.connect(self.switchFunction)
+        self.check_button = QtWidgets.QPushButton(self.layoutWidget)
+
+        # check function clicked
+        self.check_button.clicked.connect(self.switchFunction)
 
 
 
@@ -863,7 +835,7 @@ class Ui_MainWindow(object):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.export_settings.setText(_translate("MainWindow", "Export Settings"))
-        self.switch_button.setText(_translate("MainWindow", "Switch Graph"))
+        self.check_button.setText(_translate("MainWindow", "Check"))
         self.import_settings.setText(_translate("MainWindow", "Import Settings"))
         self.execute_button.setText(_translate("MainWindow", "Execute"))
         self.progress_bar_label.setText(_translate("MainWindow", "Progress Bar"))
@@ -892,7 +864,6 @@ class Ui_MainWindow(object):
         self.s_true_button.setText(_translate("MainWindow", "Click to select file"))
         self.n_output_label.setText(_translate("MainWindow", "N:"))
         self.m_output_label.setText(_translate("MainWindow", "M:"))
-        self.check_mod1.setText(_translate("MainWindow", "check values"))
         self.dy_label_2.setPlaceholderText(_translate("MainWindow", "0 - 200"))
         self.label_2.setText(_translate("MainWindow", "s_init:"))
         self.label_8.setText(_translate("MainWindow", "Module 2: Forward Model Parameters"))
@@ -912,20 +883,19 @@ class Ui_MainWindow(object):
         self.x_select.setItemText(0, _translate("MainWindow", "Unit"))
         self.x_select.setItemText(1, _translate("MainWindow", "Constant"))
         self.x_select.setItemText(2, _translate("MainWindow", "Linear"))
-        self.label_21.setText(_translate("MainWindow", "precision:"))
+        self.label_21.setText(_translate("MainWindow", "λx:"))
         self.label_25.setText(_translate("MainWindow", "kernel:"))
         self.kernel_box.setItemText(0, _translate("MainWindow", "Gaussian"))
         self.kernel_box.setItemText(1, _translate("MainWindow", "Exponential"))
-        self.label_22.setText(_translate("MainWindow", "n_pc:"))
+        self.label_22.setText(_translate("MainWindow", "n pc:"))
         self.label_23.setText(_translate("MainWindow", "matvec:"))
-        self.matvec_box.setItemText(0, _translate("MainWindow", "Dense"))
-        self.matvec_box.setItemText(1, _translate("MainWindow", "FFT"))
+        self.matvec_box.setItemText(0, _translate("MainWindow", "FFT"))
+        self.matvec_box.setItemText(1, _translate("MainWindow", "Dense"))
         self.matvec_box.setItemText(2, _translate("MainWindow", "Hmatrix"))
         self.matvec_box.setItemText(3, _translate("MainWindow", "FMM"))
-        self.label_24.setText(_translate("MainWindow", "R:"))
+        self.label_24.setText(_translate("MainWindow", "prior_std"))
         self.label_26.setText(_translate("MainWindow", "maxiter:"))
         self.label_27.setText(_translate("MainWindow", "restol:"))
-        self.label_28.setText(_translate("MainWindow", "post_cov:"))
         self.label_30.setText(_translate("MainWindow", "LM:"))
         self.label_29.setText(_translate("MainWindow", "Linesearch:"))
         self.menupyPCGA.setTitle(_translate("MainWindow", "File"))
@@ -937,7 +907,7 @@ class Ui_MainWindow(object):
 
 
     def switchFunction(self):
-        print("switched")
+        print("Checked")
 
     # function to pop up open file dialog
     def openFileNameDialog(self):
@@ -950,36 +920,21 @@ class Ui_MainWindow(object):
     def execute(self):
         value_2 = int(self.x0_box.toPlainText())
         value = int(self.lx_box.toPlainText())
-#itemData( combo.currentIndex ) 
-       # x = str(self.x_select.currentText())
-        
-        #precision = (self.precision_label.toPlainText())
-        # kernel = str(self.kernel_box.currentText()) #function
-        # n_pc = int(self.n_pc_label.toPlainText())
-        # matvec = self.matvec_box.currentText()
-        # r = float(self.r_label.toPlainText())
-        # maxiter = int(self.maxiter_label.toPlainText())
-        # restol = float(self.restol_label.toPlainText())
-        # post_cov = str(self.post_cov_label.toPlainText())
+        lambdax = int(self.precision_label.toPlainText())
+        n_pc = int(self.n_pc_label.toPlainText())
+        prior_std = float(self.r_label.toPlainText())
+        maxiter = int(self.maxiter_label.toPlainText())
+        restol = float(self.restol_label.toPlainText())
         # lm = bool(self.lm_check.isChecked())
         # linesearch= bool(self.line_search.isChecked())
 
         print("values: ", value, value_2)
 
-            #, x, n_pc, matvec, r, maxiter, restol, post_cov, lm, linesearch)
+        self.plot(value, value_2, n_pc, maxiter, restol, prior_std, lambdax)
 
-        self.plot(value, value_2)
 
-            #, x, n_pc, matvec, r, maxiter, restol, post_cov, lm, linesearch)
+    def plot(self, lx, x0, n_pc, maxiter, restol, prior_std, lambdax):
 
-    def plot(self, lx, x0):
-
-        #, x, n_pc,
-         #    matvec, r, maxiter, restol, post_cov, lm,
-          #   linesearch
-         # for windows application
-         # model domain and discretization
-        
         # This is a 1D case, therefore should be used to test the 1D scenario
         
         # M1 parameters are: Lx, Ly, Lz, x0, y0, z0, dx, dy, dz, s_true, s_init
@@ -1019,6 +974,7 @@ class Ui_MainWindow(object):
         s_true = np.loadtxt('true.txt') # input for file "true.txt" this can be changed to a default directory  
         obs = np.loadtxt('obs.txt')
 
+
         # s_init, three options (drop down menu) 
         # option 1: user inputs a constant which gets assigned to variable s_constant 
 
@@ -1031,10 +987,8 @@ class Ui_MainWindow(object):
         s_init = np.mean(s_true) * np.ones((m, 1)) #M1 file input or constant input
         # s_init = np.copy(s_true) # you can try with s_true!
      
-
-
-        prior_std = 0.04 #Module 4 (R) 
-        lambdax = 200.0
+        prior_std = prior_std #Module 4 (R) 
+        lambdax = lambdax
         prior_cov_scale = np.array([lambdax]) #M4 lambdas, lx, ly, lz
 
         def kernel(r): return (prior_std ** 2) * np.exp(-r)  # M4Kernel use switch function
@@ -1050,8 +1004,8 @@ class Ui_MainWindow(object):
                simul_obs = model.run(s, parallelization)
             return simul_obs
 
-        params = {'R': (0.04) ** 2, 'n_pc': 50,
-             'maxiter': 10, 'restol': 0.01,
+        params = {'R': (prior_std) ** 2, 'n_pc': n_pc,
+             'maxiter': maxiter, 'restol': restol,
              'matvec': 'FFT', 'xmin': xmin, 'xmax': xmax, 'N': N,
              'prior_std': prior_std, 'prior_cov_scale': prior_cov_scale,
              'kernel': kernel, 'post_cov': "diag",
@@ -1060,19 +1014,13 @@ class Ui_MainWindow(object):
              'forward_model_verbose': False, 'verbose': False,
              'iter_save': True}
 
-       # params['objeval'] = False, if true, it will compute accurate objective function
-        #params['ncores'] = 36, with parallell True, it will determine maximum physcial core unless specified
-
-
-
         #initialize
         prob = PCGA(forward_model, s_init, pts, params, s_true, obs)
-       # prob = PCGA(forward_model, s_init, pts, params, s_true, obs, X = X) if you want to add your own drift X
 
         #run inversion
         s_hat, simul_obs, post_diagv, iter_best = prob.Run()
 
-        post_diagv[post_diagv < 0.] = 0.  # just in case
+        post_diagv[post_diagv < 0.] = 0.  
         post_std = np.sqrt(post_diagv)
         ### PLOTTING FOR 1D MODULE 1 #############
         
@@ -1086,6 +1034,9 @@ class Ui_MainWindow(object):
         fig.set_xlabel('Time (min)')
         fig.set_ylabel(r'Q ($m^3$/min)')
         fig.legend()
+
+
+        ### PLOTTING FOR 1D MODULE 2, 3 & 4 #############
 
         # fig2 = self.fig.add_subplot(221)
         fig2 = self.axs[1]
@@ -1113,4 +1064,3 @@ ui.setupUi(window)
 
 window.show()
 sys.exit(app.exec_())
-
