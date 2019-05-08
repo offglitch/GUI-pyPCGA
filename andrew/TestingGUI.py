@@ -888,7 +888,7 @@ class Ui_MainWindow(object):
         self.actionImport.setText(_translate("MainWindow", "Import"))
 
     def switchFunction(self):
-        passedVals = Tru
+        passedVals = True
         x0 = int(self.x0_box.toPlainText())
         lx = int(self.lx_box.toPlainText())
         lambdax = int(self.precision_label.toPlainText())
@@ -896,6 +896,22 @@ class Ui_MainWindow(object):
         prior_std = float(self.r_label.toPlainText())
         maxiter = int(self.maxiter_label.toPlainText())
         restol = float(self.restol_label.toPlainText())
+        # check if values are in their correct range
+        if (x0 < 0):
+            passedVals = False
+        if (lx < 0):
+            passedVals = False
+        if (lambdax < 0):
+            passedVals = False
+        if (n_pc < 0 & n_pc > 200):
+            passedVals = False
+        if (prior_std < 0):
+            passedVals = False
+        if (maxiter < 0):
+            passedVals = False
+        if (restol < 0):
+            passedVals = False
+        
         
         if(passedVals):
 
@@ -903,13 +919,22 @@ class Ui_MainWindow(object):
 
             msg.setIcon(QtWidgets.QMessageBox.Information)
 
-            msg.setText("Error!")
-            msg.setInformativeText("Something went wrong. Please check that your values are correct.")
-            msg.setWindowTitle("Error Message")
-            msg.setDetailedText("The details are as follows:")
-            msg.setStandardButtons(QtWidgets.QMessageBox.Ok | QtWidgets.QMessageBox.Cancel)
-           # msg.buttonClicked.connect(msgbtn)
+            msg.setText("Correct!")
+            msg.setInformativeText("Your values are within the correct range.")
+            msg.setWindowTitle("Congratulations")
+            msg.setStandardButtons(QtWidgets.QMessageBox.Ok)
+            retval = msg.exec_()
+            print("value of pressed message box button:", retval)
+        else:
 
+            msg = QtWidgets.QMessageBox()
+
+            msg.setIcon(QtWidgets.QMessageBox.Information)
+
+            msg.setText("Error!")
+            msg.setInformativeText("One or more of your values are incorrect. Please check that your values are correct.")
+            msg.setWindowTitle("Incorrect Values")
+            msg.setStandardButtons(QtWidgets.QMessageBox.Ok)
             retval = msg.exec_()
             print("value of pressed message box button:", retval)
         print("Checked")
