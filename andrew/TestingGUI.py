@@ -68,22 +68,32 @@ class Ui_MainWindow(object):
         font.setFamily("Helvetica")
         self.restart_button.setFont(font)
         self.restart_button.setObjectName("restart_button")
-        self.gridLayout_6.addWidget(self.restart_button, 1, 0, 1, 1)
+        self.gridLayout_6.addWidget(self.restart_button, 1, 1, 1, 1)
         self.restart_button.clicked.connect(self.restartFunction)
         #----------------------------------------------
-        self.progress_bar_label = QtWidgets.QLabel(self.centralwidget)
-        self.progress_bar_label.setGeometry(QtCore.QRect(11, 11, 76, 16))
+        #check button
+        #----------------------------------------------
+        self.check_button = QtWidgets.QPushButton(self.layoutWidget)
         font = QtGui.QFont()
         font.setFamily("Helvetica")
-        self.progress_bar_label.setFont(font)
-        self.progress_bar_label.setObjectName("progress_bar_label")
-        self.progressBar = QtWidgets.QProgressBar(self.centralwidget)
-        self.progressBar.setGeometry(QtCore.QRect(11, 33, 681, 20))
-        font = QtGui.QFont()
-        font.setFamily("Helvetica")
-        self.progressBar.setFont(font)
-        self.progressBar.setProperty("value", 24)
-        self.progressBar.setObjectName("progressBar")
+        self.check_button.setFont(font)
+        self.check_button.setObjectName("check_button")
+        self.gridLayout_6.addWidget(self.check_button, 1, 0, 1, 1)
+        self.check_button.clicked.connect(self.switchFunction)
+        #----------------------------------------------
+#        self.progress_bar_label = QtWidgets.QLabel(self.centralwidget)
+#        self.progress_bar_label.setGeometry(QtCore.QRect(11, 11, 76, 16))
+#        font = QtGui.QFont()
+#        font.setFamily("Helvetica")
+#        self.progress_bar_label.setFont(font)
+#        self.progress_bar_label.setObjectName("progress_bar_label")
+#        self.progressBar = QtWidgets.QProgressBar(self.centralwidget)
+#        self.progressBar.setGeometry(QtCore.QRect(11, 33, 681, 20))
+#        font = QtGui.QFont()
+#        font.setFamily("Helvetica")
+#        self.progressBar.setFont(font)
+#        self.progressBar.setProperty("value", 24)
+#        self.progressBar.setObjectName("progressBar")
         self.fname_label = QtWidgets.QLabel(self.centralwidget)
         self.fname_label.setGeometry(QtCore.QRect(11, 60, 63, 16))
         font = QtGui.QFont()
@@ -783,13 +793,6 @@ class Ui_MainWindow(object):
         self.plotWidget = FigureCanvas(self.fig)
         self.plotWidget.setParent(self.frame)
 
-        self.check_button = QtWidgets.QPushButton(self.layoutWidget)
-
-        # check function clicked
-        self.check_button.clicked.connect(self.switchFunction)
-
-
-
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
         MainWindow.setTabOrder(self.lx_box, self.ly_box)
@@ -814,14 +817,17 @@ class Ui_MainWindow(object):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.export_settings.setText(_translate("MainWindow", "Export Settings"))
-        self.check_button.setText(_translate("MainWindow", "Check"))
         self.import_settings.setText(_translate("MainWindow", "Import Settings"))
         self.execute_button.setText(_translate("MainWindow", "Execute"))
         #restart button
         #-------------------------------------------
         self.restart_button.setText(_translate("MainWindow", "Restart"))
         #-------------------------------------------
-        self.progress_bar_label.setText(_translate("MainWindow", "Progress Bar"))
+        #check button
+        #-------------------------------------------
+        self.check_button.setText(_translate("MainWindow", "Check"))
+        #-------------------------------------------
+        #self.progress_bar_label.setText(_translate("MainWindow", "Progress Bar"))
         self.fname_label.setText(_translate("MainWindow", "File Name:"))
         self.dimension_label.setText(_translate("MainWindow", "Dimensions:"))
         self.label.setText(_translate("MainWindow", "Module 1: Domain Parameters"))
@@ -926,9 +932,15 @@ class Ui_MainWindow(object):
             retval = msg.exec_()
             print("value of pressed message box button:", retval)
         else:
+<<<<<<< HEAD
 
             msg = QtWidgets.QMessageBox()
 
+=======
+
+            msg = QtWidgets.QMessageBox()
+
+>>>>>>> 64b0e4a59a69a9c67338925a1d309898403441b7
             msg.setIcon(QtWidgets.QMessageBox.Information)
 
             msg.setText("Error!")
