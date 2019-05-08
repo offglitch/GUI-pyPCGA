@@ -8,6 +8,8 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QApplication, QWidget
+from pyPCGA import PCGA
+
 import matplotlib
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 matplotlib.use("Agg")
@@ -16,8 +18,6 @@ from scipy.io import savemat, loadmat
 import numpy as np
 import math
 import drawdown as dd
-
-from pyPCGA import PCGA
 
 
 
@@ -61,20 +61,39 @@ class Ui_MainWindow(object):
         self.gridLayout_6.addWidget(self.execute_button, 0, 0, 1, 1)
         #added
         self.execute_button.clicked.connect(self.execute)
-
-        self.progress_bar_label = QtWidgets.QLabel(self.centralwidget)
-        self.progress_bar_label.setGeometry(QtCore.QRect(11, 11, 76, 16))
+        #restart button
+        #----------------------------------------------
+        self.restart_button = QtWidgets.QPushButton(self.layoutWidget)
         font = QtGui.QFont()
         font.setFamily("Helvetica")
-        self.progress_bar_label.setFont(font)
-        self.progress_bar_label.setObjectName("progress_bar_label")
-        self.progressBar = QtWidgets.QProgressBar(self.centralwidget)
-        self.progressBar.setGeometry(QtCore.QRect(11, 33, 681, 20))
+        self.restart_button.setFont(font)
+        self.restart_button.setObjectName("restart_button")
+        self.gridLayout_6.addWidget(self.restart_button, 1, 1, 1, 1)
+        self.restart_button.clicked.connect(self.restartFunction)
+        #----------------------------------------------
+        #check button
+        #----------------------------------------------
+        self.check_button = QtWidgets.QPushButton(self.layoutWidget)
         font = QtGui.QFont()
         font.setFamily("Helvetica")
-        self.progressBar.setFont(font)
-        self.progressBar.setProperty("value", 24)
-        self.progressBar.setObjectName("progressBar")
+        self.check_button.setFont(font)
+        self.check_button.setObjectName("check_button")
+        self.gridLayout_6.addWidget(self.check_button, 1, 0, 1, 1)
+        self.check_button.clicked.connect(self.switchFunction)
+        #----------------------------------------------
+#        self.progress_bar_label = QtWidgets.QLabel(self.centralwidget)
+#        self.progress_bar_label.setGeometry(QtCore.QRect(11, 11, 76, 16))
+#        font = QtGui.QFont()
+#        font.setFamily("Helvetica")
+#        self.progress_bar_label.setFont(font)
+#        self.progress_bar_label.setObjectName("progress_bar_label")
+#        self.progressBar = QtWidgets.QProgressBar(self.centralwidget)
+#        self.progressBar.setGeometry(QtCore.QRect(11, 33, 681, 20))
+#        font = QtGui.QFont()
+#        font.setFamily("Helvetica")
+#        self.progressBar.setFont(font)
+#        self.progressBar.setProperty("value", 24)
+#        self.progressBar.setObjectName("progressBar")
         self.fname_label = QtWidgets.QLabel(self.centralwidget)
         self.fname_label.setGeometry(QtCore.QRect(11, 60, 63, 16))
         font = QtGui.QFont()
@@ -774,13 +793,6 @@ class Ui_MainWindow(object):
         self.plotWidget = FigureCanvas(self.fig)
         self.plotWidget.setParent(self.frame)
 
-        self.check_button = QtWidgets.QPushButton(self.layoutWidget)
-
-        # check function clicked
-        self.check_button.clicked.connect(self.switchFunction)
-
-
-
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
         MainWindow.setTabOrder(self.lx_box, self.ly_box)
@@ -805,10 +817,17 @@ class Ui_MainWindow(object):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.export_settings.setText(_translate("MainWindow", "Export Settings"))
-        self.check_button.setText(_translate("MainWindow", "Check"))
         self.import_settings.setText(_translate("MainWindow", "Import Settings"))
         self.execute_button.setText(_translate("MainWindow", "Execute"))
-        self.progress_bar_label.setText(_translate("MainWindow", "Progress Bar"))
+        #restart button
+        #-------------------------------------------
+        self.restart_button.setText(_translate("MainWindow", "Restart"))
+        #-------------------------------------------
+        #check button
+        #-------------------------------------------
+        self.check_button.setText(_translate("MainWindow", "Check"))
+        #-------------------------------------------
+        #self.progress_bar_label.setText(_translate("MainWindow", "Progress Bar"))
         self.fname_label.setText(_translate("MainWindow", "File Name:"))
         self.dimension_label.setText(_translate("MainWindow", "Dimensions:"))
         self.label.setText(_translate("MainWindow", "Module 1: Domain Parameters"))
@@ -874,25 +893,81 @@ class Ui_MainWindow(object):
         self.actionDownload.setText(_translate("MainWindow", "Download"))
         self.actionImport.setText(_translate("MainWindow", "Import"))
 
-
-
     def switchFunction(self):
-        # if(len(obs) != m):
+        passedVals = True
+        x0 = int(self.x0_box.toPlainText())
+        lx = int(self.lx_box.toPlainText())
+        lambdax = int(self.precision_label.toPlainText())
+        n_pc = int(self.n_pc_label.toPlainText())
+        prior_std = float(self.r_label.toPlainText())
+        maxiter = int(self.maxiter_label.toPlainText())
+        restol = float(self.restol_label.toPlainText())
+        # check if values are in their correct range
+        if (x0 < 0):
+            passedVals = False
+        if (lx < 0):
+            passedVals = False
+        if (lambdax < 0):
+            passedVals = False
+        if (n_pc < 0 & n_pc > 200):
+            passedVals = False
+        if (prior_std < 0):
+            passedVals = False
+        if (maxiter < 0):
+            passedVals = False
+        if (restol < 0):
+            passedVals = False
+        
+        
+        if(passedVals):
 
-        #    msg = QtWidgets.QMessageBox()
+            msg = QtWidgets.QMessageBox()
 
-        #    msg.setIcon(QtWidgets.QMessageBox.Information)
+            msg.setIcon(QtWidgets.QMessageBox.Information)
 
-        #    msg.setText("Error!")
-        #    msg.setInformativeText("Something went wrong. Please check that your values are correct.")
-        #    msg.setWindowTitle("Error Message")
-        #    msg.setDetailedText("The details are as follows:")
-        #    msg.setStandardButtons(QtWidgets.QMessageBox.Ok | QtWidgets.QMessageBox.Cancel)
-        #   # msg.buttonClicked.connect(msgbtn)
-    
-        #    retval = msg.exec_()
-        #    print("value of pressed message box button:", retval)
+            msg.setText("Correct!")
+            msg.setInformativeText("Your values are within the correct range.")
+            msg.setWindowTitle("Congratulations")
+            msg.setStandardButtons(QtWidgets.QMessageBox.Ok)
+            retval = msg.exec_()
+            print("value of pressed message box button:", retval)
+        else:
+            
+            msg = QtWidgets.QMessageBox()
+            
+            msg.setIcon(QtWidgets.QMessageBox.Information)
+
+            msg.setText("Error!")
+            msg.setInformativeText("One or more of your values are incorrect. Please check that your values are correct.")
+            msg.setWindowTitle("Incorrect Values")
+            msg.setStandardButtons(QtWidgets.QMessageBox.Ok)
+            retval = msg.exec_()
+            print("value of pressed message box button:", retval)
         print("Checked")
+
+    def restartFunction(self):
+        global window
+        global app
+
+        msg = QtWidgets.QMessageBox()
+
+        msg.setIcon(QtWidgets.QMessageBox.Information)
+
+        msg.setText("Restart")
+        msg.setInformativeText("Are you sure you want to restart the program?")
+        msg.setWindowTitle("Restart Message")
+        msg.setStandardButtons(QtWidgets.QMessageBox.Ok | QtWidgets.QMessageBox.Cancel)
+        # gets the button value pressed
+        retval = msg.exec_()
+        print("value of pressed message box button:", retval)
+        #if button == "ok"
+        if (retval == 1024):
+            print("Restarted")
+            #restart the program
+            python = sys.executable
+            os.execl(python, python, * sys.argv)
+        print("exited restart")
+
 
     # function to pop up open file dialog
     def openFileNameDialog(self):
@@ -962,21 +1037,21 @@ class Ui_MainWindow(object):
 
 
 
-        if(len(obs) != m):
+        # if(len(obs) != m):
 
-           msg = QtWidgets.QMessageBox()
+        #    msg = QtWidgets.QMessageBox()
 
-           msg.setIcon(QtWidgets.QMessageBox.Information)
+        #    msg.setIcon(QtWidgets.QMessageBox.Information)
 
-           msg.setText("Error!")
-           msg.setInformativeText("Something went wrong. Please check that your values are correct.")
-           msg.setWindowTitle("Error Message")
-           msg.setDetailedText("The details are as follows:")
-           msg.setStandardButtons(QtWidgets.QMessageBox.Ok | QtWidgets.QMessageBox.Cancel)
-          # msg.buttonClicked.connect(msgbtn)
+        #    msg.setText("Error!")
+        #    msg.setInformativeText("Something went wrong. Please check that your values are correct.")
+        #    msg.setWindowTitle("Error Message")
+        #    msg.setDetailedText("The details are as follows:")
+        #    msg.setStandardButtons(QtWidgets.QMessageBox.Ok | QtWidgets.QMessageBox.Cancel)
+        #   # msg.buttonClicked.connect(msgbtn)
     
-           retval = msg.exec_()
-           print("value of pressed message box button:", retval)
+        #    retval = msg.exec_()
+        #    print("value of pressed message box button:", retval)
     
 
         # print("the values in obs are not correct")
@@ -1057,6 +1132,7 @@ class Ui_MainWindow(object):
         self.plotWidget.draw()
 
 import sys
+import os
 from PyQt5.QtWidgets import QApplication, QMainWindow
 
 app = QApplication(sys.argv)
