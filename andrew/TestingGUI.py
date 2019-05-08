@@ -932,15 +932,9 @@ class Ui_MainWindow(object):
             retval = msg.exec_()
             print("value of pressed message box button:", retval)
         else:
-<<<<<<< HEAD
-
+            
             msg = QtWidgets.QMessageBox()
-
-=======
-
-            msg = QtWidgets.QMessageBox()
-
->>>>>>> 64b0e4a59a69a9c67338925a1d309898403441b7
+            
             msg.setIcon(QtWidgets.QMessageBox.Information)
 
             msg.setText("Error!")
