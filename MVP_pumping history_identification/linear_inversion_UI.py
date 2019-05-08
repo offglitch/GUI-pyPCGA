@@ -95,7 +95,7 @@ class Ui_MainWindow(object):
 #        self.progressBar.setProperty("value", 24)
 #        self.progressBar.setObjectName("progressBar")
         self.fname_label = QtWidgets.QLabel(self.centralwidget)
-        self.fname_label.setGeometry(QtCore.QRect(11, 60, 63, 16))
+        self.fname_label.setGeometry(QtCore.QRect(11, 60, 400, 16))
         font = QtGui.QFont()
         font.setFamily("Helvetica")
         self.fname_label.setFont(font)
@@ -815,7 +815,7 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "pyPCGA"))
         self.export_settings.setText(_translate("MainWindow", "Export Settings"))
         self.import_settings.setText(_translate("MainWindow", "Import Settings"))
         self.execute_button.setText(_translate("MainWindow", "Execute"))
@@ -828,7 +828,7 @@ class Ui_MainWindow(object):
         self.check_button.setText(_translate("MainWindow", "Check"))
         #-------------------------------------------
         #self.progress_bar_label.setText(_translate("MainWindow", "Progress Bar"))
-        self.fname_label.setText(_translate("MainWindow", "File Name:"))
+        self.fname_label.setText(_translate("MainWindow", "File Name: Pumping History Identification"))
         self.dimension_label.setText(_translate("MainWindow", "Dimensions:"))
         self.label.setText(_translate("MainWindow", "Module 1: Domain Parameters"))
         self.x0_label.setText(_translate("MainWindow", "x0:"))
