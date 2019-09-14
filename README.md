@@ -1,6 +1,6 @@
 # Graphical User Interface for pyPCGA
 
-* This project focuses on developing a Graphical User Interface for professionals to use pyPCGA as a tool for decision making in the field along with students and educators who study data science in hydrogeology.
+This project focuses on developing a Graphical User Interface for professionals to use pyPCGA as a tool for decision making in the field along with students and educators who study data science in hydrogeology.
 
 
 # Modules 
