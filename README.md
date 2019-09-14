@@ -1,19 +1,38 @@
-# GUI development for pyPCGA
+# Graphical User Interface for pyPCGA
 
-Python library for Principal Component Geostatistical Approach
+* This project focuses on developing a Graphical User Interface for professionals to use pyPCGA as a tool for decision making in the field along with students and educators who study data science in hydrogeology.
 
-Currently, our senior team project is working on implementing a functional GUI for pyPCGA using PyQT.
 
-version 0.1
+# Modules 
 
-updates
-- Exact preconditioner construction (inverse of cokriging/saddle-point matrix) using generalized eigendecomposition [Lee et al., WRR 2016, Saibaba et al, NLAA 2016]
-- Fast predictive model validation using cR/Q2 criteria [Kitanidis, Math Geol 1991] ([Lee et al., 2018 in preparation]) 
-- Fast posterior variance/std computation using exact preconditioner
+* **Module 1:** Takes parameters to define the x,y,z dimensions from min to max possible values. Outputs M, the number of unknown values.
+* **Module 2:** Works with the kernel to pass permissions to PCGA algorithm to run groundwater model executable.
+* **Module 3:** Takes file with observation data to be used by PCGA. Calculates and verifies correctness of N.
+* **Module 3:** Takes inversion parameters to use during iterations of the PCGA optimization algorithm. 
 
-version 0.2 will include
-- automatic covariance model parameter calibration
-- link with FMM (pyFMM3D) and HMatrix (pyHmatrix) to support unstructured grids 
+# User Experience Flowchart
+
+![Flowchart](/pyPCGA_Userflow.png)
+
+# Version
+
+* *v1.0.0 
+  * - [x] Integrated PyQt with Pumping Identification's case study source code
+  * - [x] Input for Module 1, 2, 3, and 4 
+  * - [x] Choose file, import input, and pass it to an array
+  * - [x] Values & visualization output
+  * - [x] Basic error handling
+  * - [x] Access kernel to pass permissions to PCGA algorithm to run groundwater model executable
+  * - [x] Execution and Restart buttons functional
+  * - [x] Calculation of final values with second visualization
+
+* *v1.0.1
+  * - [ ] Change of label names in Module 1
+  * - [ ] Adding a conditional to autofill Y and X axis values
+  * - [ ] Set an optional for s_init to choose a constant or file import
+  * - [ ] Naming for M and N in both backend and frontend
+  * - [ ] Updated error handling
+
 
 # Example Notebooks
 
