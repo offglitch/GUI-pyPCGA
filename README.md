@@ -1,6 +1,6 @@
 # Graphical User Interface for pyPCGA
 
-* This project focuses on developing a Graphical User Interface for professionals to use pyPCGA as a tool for decision making in the field along with students and educators who study data science in hydrogeology.
+This project focuses on developing a Graphical User Interface for professionals to use pyPCGA as a tool for decision making in the field along with students and educators who study data science in hydrogeology.
 
 
 # Modules 
@@ -16,7 +16,7 @@
 
 # Version
 
-* *v1.0.0 
+* _*v1.0.0*_
   * - [x] Integrated PyQt with Pumping Identification's case study source code
   * - [x] Input for Module 1, 2, 3, and 4 
   * - [x] Choose file, import input, and pass it to an array
@@ -26,7 +26,7 @@
   * - [x] Execution and Restart buttons functional
   * - [x] Calculation of final values with second visualization
 
-* *v1.0.1
+* _*v1.0.1*_
   * - [ ] Change of label names in Module 1
   * - [ ] Adding a conditional to autofill Y and X axis values
   * - [ ] Set an optional for s_init to choose a constant or file import
