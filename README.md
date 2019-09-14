@@ -12,7 +12,7 @@ This project focuses on developing a Graphical User Interface for professionals 
 
 # User Experience Flowchart
 
-![Flowchart](/pyPCGA_Userflow.png)
+![Flowchart](/info/pyPCGA_Flowchart.png)
 
 # Version
 
