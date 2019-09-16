@@ -1,12 +1,4 @@
-# -*- coding: utf-8 -*-
-
-# Form implementation generated from reading ui file 'pypcga-fe-2.ui'
-#
-# Created by: PyQt5 UI code generator 5.9.2
-#
-# WARNING! All changes made in this file will be lost!
-
-from PyQt5 import QtCore, QtGui, QtWidgets
+﻿from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QApplication, QWidget
 from pyPCGA import PCGA
 
@@ -25,6 +17,9 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("pyPCGA")
         MainWindow.resize(1440, 855)
+        #----------------------------------------------
+        # Setting the frame
+        #----------------------------------------------
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.frame = QtWidgets.QFrame(self.centralwidget)
@@ -59,9 +54,12 @@ class Ui_MainWindow(object):
         self.execute_button.setFont(font)
         self.execute_button.setObjectName("execute_button")
         self.gridLayout_6.addWidget(self.execute_button, 0, 0, 1, 1)
-        #added
+        #----------------------------------------------
+        # added an execute button
+        #----------------------------------------------
         self.execute_button.clicked.connect(self.execute)
-        #restart button
+        #----------------------------------------------
+        # restart button
         #----------------------------------------------
         self.restart_button = QtWidgets.QPushButton(self.layoutWidget)
         font = QtGui.QFont()
@@ -71,7 +69,7 @@ class Ui_MainWindow(object):
         self.gridLayout_6.addWidget(self.restart_button, 1, 1, 1, 1)
         self.restart_button.clicked.connect(self.restartFunction)
         #----------------------------------------------
-        #check button
+        # check values button
         #----------------------------------------------
         self.check_button = QtWidgets.QPushButton(self.layoutWidget)
         font = QtGui.QFont()
@@ -81,19 +79,8 @@ class Ui_MainWindow(object):
         self.gridLayout_6.addWidget(self.check_button, 1, 0, 1, 1)
         self.check_button.clicked.connect(self.switchFunction)
         #----------------------------------------------
-#        self.progress_bar_label = QtWidgets.QLabel(self.centralwidget)
-#        self.progress_bar_label.setGeometry(QtCore.QRect(11, 11, 76, 16))
-#        font = QtGui.QFont()
-#        font.setFamily("Helvetica")
-#        self.progress_bar_label.setFont(font)
-#        self.progress_bar_label.setObjectName("progress_bar_label")
-#        self.progressBar = QtWidgets.QProgressBar(self.centralwidget)
-#        self.progressBar.setGeometry(QtCore.QRect(11, 33, 681, 20))
-#        font = QtGui.QFont()
-#        font.setFamily("Helvetica")
-#        self.progressBar.setFont(font)
-#        self.progressBar.setProperty("value", 24)
-#        self.progressBar.setObjectName("progressBar")
+        # Setting object names and sizing for main frame labels
+        #----------------------------------------------
         self.fname_label = QtWidgets.QLabel(self.centralwidget)
         self.fname_label.setGeometry(QtCore.QRect(11, 60, 400, 16))
         font = QtGui.QFont()
@@ -125,10 +112,11 @@ class Ui_MainWindow(object):
         self.label.setFont(font)
         self.label.setAutoFillBackground(False)
         self.label.setObjectName("label")
+        #----------------------------------------------
+        # Setting Module 1's frame and grid layout
+        #----------------------------------------------
         self.Module1Frame = QtWidgets.QFrame(self.centralwidget)
-
         self.Module1Frame.setGeometry(QtCore.QRect(11, 114, 691, 181))
-
         font = QtGui.QFont()
         font.setFamily("Helvetica")
         self.Module1Frame.setFont(font)
@@ -138,6 +126,9 @@ class Ui_MainWindow(object):
         self.Module1Frame.setObjectName("Module1Frame")
         self.gridLayout = QtWidgets.QGridLayout(self.Module1Frame)
         self.gridLayout.setObjectName("gridLayout")
+        #----------------------------------------------
+        # Module 1 labels and boxes start here
+        #----------------------------------------------
         self.x0_label = QtWidgets.QLabel(self.Module1Frame)
         self.x0_label.setMaximumSize(QtCore.QSize(50, 20))
         font = QtGui.QFont()
@@ -357,20 +348,15 @@ class Ui_MainWindow(object):
         self.s_true_label.setFont(font)
         self.s_true_label.setObjectName("s_true_label")
         self.gridLayout.addWidget(self.s_true_label, 3, 0, 1, 1)
-
         self.s_true_button = QtWidgets.QToolButton(self.Module1Frame)
-        self.s_true_button.setMinimumSize(QtCore.QSize(200, 25))
-        self.s_true_button.setMaximumSize(QtCore.QSize(200, 25))
+        self.s_true_button.setMinimumSize(QtCore.QSize(100, 25))
+        self.s_true_button.setMaximumSize(QtCore.QSize(100, 25))
         self.s_true_button.setPopupMode(QtWidgets.QToolButton.DelayedPopup)
         self.s_true_button.setToolButtonStyle(QtCore.Qt.ToolButtonTextBesideIcon)
         self.s_true_button.setAutoRaise(True)
         self.s_true_button.setObjectName("s_true_button")
         self.gridLayout.addWidget(self.s_true_button, 3, 1, 1, 1)
-
         self.s_true_button.clicked.connect(self.openFileNameDialog)
-
-
-        
         self.m_output_label = QtWidgets.QLabel(self.Module1Frame)
         self.m_output_label.setMaximumSize(QtCore.QSize(50, 20))
         font = QtGui.QFont()
@@ -419,9 +405,15 @@ class Ui_MainWindow(object):
         self.fname_output.setText("")
         self.fname_output.setObjectName("fname_output")
         self.label_8 = QtWidgets.QLabel(self.centralwidget)
-        #adjusted to fix bleed issue
+        # Adjusted to fix bleed issue
         self.label_8.setGeometry(QtCore.QRect(11, 311, 300, 16))
+        #----------------------------------------------
+        # End of Module 1 labels and boxes
+        #----------------------------------------------
 
+        #----------------------------------------------
+        # 
+        #----------------------------------------------
         font = QtGui.QFont()
         font.setFamily("Helvetica")
         font.setPointSize(16)
