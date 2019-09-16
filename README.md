@@ -13,7 +13,7 @@ This project focuses on developing a Graphical User Interface for professionals 
 # User Experience Flowchart
 
 <p align="center">
-  <img src="/info/pyPCGA_Flowchart.svg">
+  <img src="/info/pyPCGA_Flowchart.svg" width="546" height="863" >
 </p>
 
 # Version
