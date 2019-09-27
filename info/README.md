@@ -7,14 +7,14 @@
 - [x] Visualization output for module 1
 - [x] Execution function
 
-* _*v1.0.1_*
+* _*v1.0.1*_
 - [x] Basic error handling, check values function
 - [x] Access kernel to pass permissions to PCGA algorithm to run groundwater model executable
 - [x] Restart function
 - [x] File dialog functional
 - [x] Visualization output for module 1, 2, 3 and 4
 
-* _*v1.0.2_*
+* _*v1.0.2*_
 - [x] Switch between graphs function
 - [x] Fixed framing for visualizations
 
