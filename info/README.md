@@ -1,25 +1,20 @@
-# Version
+# Version Control
 
-* _*v1.0.0*_
-- [x] Integrated PyQt with Pumping Identification's case study source code
-- [x] UI input for module 1, 2, 3, and 4 
-- [x] Choose file, import input, and pass it to an array
-- [x] Visualization output for module 1
-- [x] Execution function
+<h4>Version <em>1.0.0</em></h4>	
 
-* _*v1.0.1*_
-- [x] Basic error handling, check values function
-- [x] Access kernel to pass permissions to PCGA algorithm to run groundwater model executable
-- [x] Restart function
-- [x] File dialog functional
-- [x] Visualization output for module 1, 2, 3 and 4
+|                       v1.0.0                       	|                          v1.0.1                          	|              v1.0.2              	|
+|:--------------------------------------------------:	|:--------------------------------------------------------:	|:--------------------------------:	|
+| Integrated PyQt with 1D case study                 	| Basic error handling, check values function              	| Switch between graphs function   	|
+| UI input for module 1, 2, 3, and 4                 	| Access kernel for PCGA algorithm to run model executable 	| Fixed framing for visualizations 	|
+| Choose file, import input, and pass it to an array 	| Restart function                                         	| remote access established        	|
+| Visualization output for module 1                  	| File dialog functional                                   	|                                  	|
+| Execute function                                   	| Visualization output for module 1, 2, 3 and 4            	|                                  	|
 
-* _*v1.0.2*_
-- [x] Switch between graphs function
-- [x] Fixed framing for visualizations
+<h4>Version <em>1.1.0</em></h4>	
 
-* _*v1.1.0*_
-- [x] 1D, 2D, 3D dropdown selection of case study
-- [x] Autofill for each selected case
-- [x] Ability to either import s_init values or type it in text format through the UI
-- [x] Better error handling with descriptive error message dialog boxes
+| v1.1.0                                      	|   	|   	|
+|---------------------------------------------	|---	|---	|
+| 1D, 2D, 3D dropdown selection of case study 	|   	|   	|
+| Autofill for each selected case             	|   	|   	|
+| Either import s_init or type as input       	|   	|   	|
+| Descriptive error message dialog boxes      	|   	|   	|
