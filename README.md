@@ -16,25 +16,6 @@ This project focuses on developing a Graphical User Interface for professionals 
   <img src="/info/pyPCGA_Flowchart.svg" width="546" height="863" >
 </p>
 
-# Version
-
-* _*v1.0.0*_
-  * - [x] Integrated PyQt with Pumping Identification's case study source code
-  * - [x] Input for Module 1, 2, 3, and 4 
-  * - [x] Choose file, import input, and pass it to an array
-  * - [x] Values & visualization output
-  * - [x] Basic error handling
-  * - [x] Access kernel to pass permissions to PCGA algorithm to run groundwater model executable
-  * - [x] Execution and Restart buttons functional
-  * - [x] Calculation of final values with second visualization
-
-* _*v1.0.1*_
-  * - [ ] Change of label names in Module 1
-  * - [ ] Adding a conditional to autofill Y and X axis values
-  * - [ ] Set an optional for s_init to choose a constant or file import
-  * - [ ] Naming for M and N in both backend and frontend
-  * - [ ] Updated error handling
-
 
 # Example Notebooks
 
