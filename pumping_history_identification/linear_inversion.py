@@ -1240,7 +1240,15 @@ class Ui_MainWindow(object):
         if value == '3D':
             self.set_read_only_state(y_boxes, False)
             self.set_read_only_state(z_boxes, False)
-
+        elif value == '2D':
+            self.set_read_only_state(y_boxes, False)
+            self.set_read_only_state(z_boxes, True)
+            self.set_default_dimensions_val(z_boxes)
+        elif value == '1D':
+            self.set_read_only_state(y_boxes)
+            self.set_read_only_state(z_boxes)
+            self.set_default_dimensions_val(y_boxes)
+            self.set_default_dimensions_val(z_boxes)
 
     def s_init_type_changed(self, value):
         if value == 'file':
