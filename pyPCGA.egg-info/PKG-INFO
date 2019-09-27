@@ -1,0 +1,13 @@
+Metadata-Version: 1.2
+Name: pyPCGA
+Version: 0.1.0
+Summary: pyPCGA is a Python package to run Principal Component Geostatistical Approach
+Home-page: https://github.com/jonghyunharrylee/pyPCGA/
+Author: Jonghyun Harry Lee
+Author-email: jonghyun.harry.lee@hawaii.edu
+License: New BSD
+Description: UNKNOWN
+Platform: Windows
+Platform: Mac OS-X
+Platform: Linux
+Requires-Python: >=3.3
