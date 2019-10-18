@@ -1133,15 +1133,19 @@ class Ui_MainWindow(object):
         # print("the values in obs are not correct")
         # s_init, three options (drop down menu)
         # option 1: user inputs a constant which gets assigned to variable s_constant
-
-        s_constant = 1          # M1: User selects constant checkbox from drop down, and inputs number in box
-        s_init = s_constant * np.ones((m, 1))
+        # change the scope of s_constant 
+        # s_constant = 1 
+        # M1: User selects constant checkbox from drop down, and inputs number in box
         if hasattr(self, 's_init_box_file') and self.s_init_box_file:
             s_init = np.loadtxt(self.s_init_box_file)
         elif self.s_init_text_box.toPlainText():
             try:
                 values = self.s_init_text_box.toPlainText()
-                values = list(map(int, values.split(' ')))
+                # multiply the number that was entered (single value only) in the text box and push them into the list instead of splitting by spaces
+                # values = list(map(int, values.split(' ')))
+                # push into s_constant = 1 
+                s_init = values * np.ones((m, 1))
+                print(s_init)
             except (TypeError, ValueError):
                 self.open_error_dialog('s_init values should be numbers separated by spaces')
                 return
@@ -1182,7 +1186,7 @@ class Ui_MainWindow(object):
              'prior_std': prior_std, 'prior_cov_scale': prior_cov_scale,
              'kernel': kernel, 'post_cov': "diag",
              'precond': True, 'LM': True,
-             'parallel': True, 'linesearch': True,
+             'parallel': False, 'linesearch': True,
              'forward_model_verbose': False, 'verbose': False,
              'iter_save': True}
 
