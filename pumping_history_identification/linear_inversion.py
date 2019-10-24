@@ -555,7 +555,7 @@ class Ui_MainWindow(object):
         font.setPointSize(15)
         self.n_module3_label.setFont(font)
         self.n_module3_label.setObjectName("n_module3_label")
-        self.gridLayout_3.addWidget(self.n_module3_label, 0, 2, 1, 1)
+        self.gridLayout_3.addWidget(self.n_module3_label, 0, 2)
         self.obs_label = QtWidgets.QLabel(self.Module1Frame_3)
         self.obs_label.setMaximumSize(QtCore.QSize(130, 25))
         font = QtGui.QFont()
@@ -564,7 +564,7 @@ class Ui_MainWindow(object):
         self.obs_label.setFont(font)
         self.obs_label.setObjectName("obs_label")
         # Fix Grid positioning for the label and the box
-        self.gridLayout_3.addWidget(self.obs_label, 0, 0, 0, 0)
+        self.gridLayout_3.addWidget(self.obs_label, 0, 0)
         self.Obs_button = QtWidgets.QToolButton(self.Module1Frame_3)
         self.Obs_button.setMinimumSize(QtCore.QSize(130, 25))
         self.Obs_button.setMaximumSize(QtCore.QSize(130, 25))
@@ -572,7 +572,7 @@ class Ui_MainWindow(object):
         self.Obs_button.setToolButtonStyle(QtCore.Qt.ToolButtonTextBesideIcon)
         self.Obs_button.setAutoRaise(True)
         self.Obs_button.setObjectName("Obs_button")
-        self.gridLayout_3.addWidget(self.Obs_button, 0, 0, 0, 0)
+        self.gridLayout_3.addWidget(self.Obs_button, 0, 1)
         self.Obs_button.clicked.connect(self.openFileNameDialog)
         #----------------------------------------------
         # Setting Module 4's labels and boxes
@@ -1142,12 +1142,12 @@ class Ui_MainWindow(object):
             try:
                 values = self.s_init_text_box.toPlainText()
                 # multiply the number that was entered (single value only) in the text box and push them into the list instead of splitting by spaces
-                # values = list(map(int, values.split(' ')))
                 # push into s_constant = 1 
-                s_init = values * np.ones((m, 1))
+                values = list(map(int, values))
+                # s_init = values * np.ones((m, 1))
                 print(s_init)
             except (TypeError, ValueError):
-                self.open_error_dialog('s_init values should be numbers separated by spaces')
+                self.open_error_dialog('s_init is not a proper value')
                 return
         else:
             self.open_error_dialog('s_init value not present')
