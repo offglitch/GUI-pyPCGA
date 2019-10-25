@@ -1143,8 +1143,10 @@ class Ui_MainWindow(object):
                 values = self.s_init_text_box.toPlainText()
                 # multiply the number that was entered (single value only) in the text box and push them into the list instead of splitting by spaces
                 # push into s_constant = 1 
-                values = list(map(int, values))
-                # s_init = values * np.ones((m, 1))
+                values = int(values)
+                print(type(values))
+                print(values)
+                s_init = values * np.ones((m, 1))
                 print(s_init)
             except (TypeError, ValueError):
                 self.open_error_dialog('s_init is not a proper value')
